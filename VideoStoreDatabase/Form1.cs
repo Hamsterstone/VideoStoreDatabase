@@ -48,18 +48,19 @@ namespace VideoStoreDatabase
         }
 
         //search boxes:
-        //flick to tab figure out how to keep focus on textbox
+        //flick to tab 
         public void SearchBoxClicked(object sender, EventArgs e)
         {
             TextBox fakeTextBox = sender as TextBox;
             if (fakeTextBox.Name == "txtFindMovie")
             {
                 tabControl1.SelectedTab = tabPageMovies;
-                //txtFindMovie.takefocus
+                txtFindMovie.Focus();
             }
             else if (fakeTextBox.Name == "txtFindCustomer")
             {
                 tabControl1.SelectedTab = tabPageCustomers;
+                txtFindCustomer.Focus();
             }
         }
 
@@ -154,7 +155,7 @@ namespace VideoStoreDatabase
 
         public void btnIssueRental_Click(object sender, EventArgs e)
         {
-            if (monthCalendar1.SelectionStart != monthCalendar1.SelectionEnd)
+            if (monthCalendar1.SelectionStart.ToShortDateString() != monthCalendar1.SelectionEnd.ToShortDateString())
             {
                 MessageBox.Show("Select a single date.");
 
@@ -164,11 +165,13 @@ namespace VideoStoreDatabase
                 DateTime date = monthCalendar1.SelectionStart;
                 int movieID = Convert.ToInt32(txtMovieID.Text);
                 int customerID = Convert.ToInt32(txtCustID.Text);
-                myDatabase.CreateNewRental(customerID, movieID, date);
+                //Note: Make sure you pass movieID&CustomerID in the right order or everything goes pear shaped.
+                myDatabase.CreateNewRental(movieID, customerID, date);
                 LoadDatabase();
             }
         }
 
+        //return rental: pass rental ID and date to db method
         public void btnReturnRental_Click(object sender, EventArgs e)
         {
             DataGridView fakeDataGridView = dgvRentals;
@@ -187,6 +190,5 @@ namespace VideoStoreDatabase
         }
         //edit movie click: open new form to add/update/delete movies.
         //edit customers as above
-        //return rental: pass rental ID and date to db method
     }
 }

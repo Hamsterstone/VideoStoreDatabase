@@ -27,14 +27,29 @@ namespace VideoStoreDatabase
 
         public DataTable FillDatatable(string table)
         {
+            //SqlCommand myCommand = connection.CreateCommand();
+            //myCommand.Connection = connection;
+            //myCommand.CommandText = "ReturnRental";
+            //myCommand.CommandType = CommandType.;
+            //myCommand.Parameters.AddWithValue("@RentalID", rentalID);
+            //myCommand.Parameters.AddWithValue("@DateReturned", date);
+            //connection.Open();
+            //myCommand.ExecuteNonQuery();
+            //connection.Close();
+
+
+
+
+
+
             string sqlQuery = @"SELECT * FROM " + table;
             DataTable myDataTable = new DataTable();
             using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
             {
-                MessageBox.Show(connection.ToString());
-                connection.Open();
+               // MessageBox.Show(connection.ToString());
+               // connection.Open();
                 myDataAdapter.Fill(myDataTable);
-                connection.Close();
+               // connection.Close();
                 //connection.Dispose();
                 return myDataTable;
             }
@@ -48,7 +63,7 @@ namespace VideoStoreDatabase
             switch (table)
             {
                 case "Movies":
-                    sqlQuery = @"SELECT * FROM " + table + " WHERE Title LIKE '" + item + "%' ORDER by Title";
+                    sqlQuery = @"SELECT * FROM " + table + " WHERE Title LIKE '%" + item + "%' ORDER by Title";
                     //   DataTable myDataTable = new DataTable();
                     using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
                     {
@@ -76,6 +91,8 @@ namespace VideoStoreDatabase
         public DataTable RentalDataSelect(string select)
         {
             DataTable myDataTable = new DataTable();
+
+
             //TO DO: Remove all sql queries and replace with procedure calls.
             string sqlQuery =
                 @"SELECT dbo.RentedMovies.RMID, dbo.Customer.FirstName, dbo.Customer.LastName, dbo.Movies.Title, dbo.RentedMovies.DateRented, dbo.RentedMovies.DateReturned FROM dbo.Customer INNER JOIN dbo.RentedMovies ON dbo.Customer.CustID = dbo.RentedMovies.CustIDFK INNER JOIN dbo.Movies ON dbo.RentedMovies.MovieIDFK = dbo.Movies.MovieID";
@@ -87,6 +104,7 @@ namespace VideoStoreDatabase
 
             using (myDataAdapter = new SqlDataAdapter(sqlQuery + modifier, connection))
             {
+                
                 connection.Open();
                 myDataAdapter.Fill(myDataTable);
                 connection.Close();
@@ -97,42 +115,64 @@ namespace VideoStoreDatabase
      //rental return if returndate==null then returndate = date. make date field for debug, note date to be system date.
         public void ReturnRental(int rentalID, DateTime date)
         {
-            SqlCommand myCommand=new SqlCommand("UPDATE RentedMovies set DateReturned=@Date where RMID=@rentalID");
-            using (myCommand.Connection = connection)
-            {
-                if (myCommand.Connection.ConnectionString != string.Empty)
-                {
-                   // myCommand.Parameters.AddWithValue("@MovieID", movieID);
-                myCommand.Parameters.AddWithValue("@rentalID", rentalID);
-                myCommand.Parameters.AddWithValue("@date", date);
-                connection.Open();
-                myCommand.ExecuteNonQuery();
-                connection.Close();
-             }
-            else
-            {
-                MessageBox.Show("no connectionstring");
+            SqlCommand myCommand = connection.CreateCommand();
+            myCommand.Connection = connection;
+            myCommand.CommandText = "ReturnRental";
+            myCommand.CommandType = CommandType.StoredProcedure;
+            myCommand.Parameters.AddWithValue("@RentalID", rentalID);
+            myCommand.Parameters.AddWithValue("@DateReturned", date);
+            connection.Open();
+            myCommand.ExecuteNonQuery();
+            connection.Close();
 
-            }
 
-        } }
+           // SqlCommand myCommand=new SqlCommand("UPDATE RentedMovies set DateReturned=@Date where RMID=@rentalID");
+           // //using (
+           // myCommand.Connection = connection;
+           //// {
+           //     if (myCommand.Connection.ConnectionString != string.Empty)
+           //     {
+           //        // myCommand.Parameters.AddWithValue("@MovieID", movieID);
+           //     myCommand.Parameters.AddWithValue("@rentalID", rentalID);
+           //     myCommand.Parameters.AddWithValue("@date", date);
+           //     connection.Open();
+           //     myCommand.ExecuteNonQuery();
+           //     connection.Close();
+           //  }
+           // else
+           // {
+           //     MessageBox.Show("no connectionstring");
+
+           // }
+
+        } //}
         //rental issue, take movieID, CustID, date(see above) create new rental.
         public void CreateNewRental(int movieID, int customerID, DateTime date)
         {
             try
             {
-                SqlCommand myCommand =
-                    new SqlCommand(
-                        "INSERT INTO RentedMovies(MovieIDFK,CustIDFK,DateRented) VALUES(@movieID,@customerID,@date)");
-                using (myCommand.Connection = connection)
-                {
-                    myCommand.Parameters.AddWithValue("@MovieID", movieID);
-                    myCommand.Parameters.AddWithValue("@CustomerID", customerID);
-                    myCommand.Parameters.AddWithValue("@date", date);
-                    connection.Open();
-                    myCommand.ExecuteNonQuery();
-                    connection.Close();
-                }
+                SqlCommand myCommand = connection.CreateCommand();
+                myCommand.Connection = connection;
+                myCommand.CommandText = "CreateRental";
+                myCommand.CommandType=CommandType.StoredProcedure;
+                myCommand.Parameters.AddWithValue("@MovieIDFK", movieID);
+                myCommand.Parameters.AddWithValue("@CustomerIDFK", customerID);
+                myCommand.Parameters.AddWithValue("@DateRented", date);
+                connection.Open();
+                myCommand.ExecuteNonQuery();
+                connection.Close();
+                //SqlCommand myCommand =
+                //    new SqlCommand(
+                //        @"INSERT INTO RentedMovies(MovieIDFK,CustIDFK,DateRented) VALUES(@movieID,@customerID,@date)");
+                //    myCommand.Connection = connection;
+                
+                //    myCommand.Parameters.AddWithValue("@MovieID", movieID);
+                //    myCommand.Parameters.AddWithValue("@CustomerID", customerID);
+                //    myCommand.Parameters.AddWithValue("@date", date);
+                //    connection.Open();
+                //    myCommand.ExecuteNonQuery();
+                //    connection.Close();
+                
 
             }
             catch (Exception ex)
