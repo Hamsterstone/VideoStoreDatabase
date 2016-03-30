@@ -27,90 +27,156 @@ namespace VideoStoreDatabase
 
         public DataTable FillDatatable(string table)
         {
-            //SqlCommand myCommand = connection.CreateCommand();
-            //myCommand.Connection = connection;
-            //myCommand.CommandText = "ReturnRental";
-            //myCommand.CommandType = CommandType.;
-            //myCommand.Parameters.AddWithValue("@RentalID", rentalID);
-            //myCommand.Parameters.AddWithValue("@DateReturned", date);
-            //connection.Open();
-            //myCommand.ExecuteNonQuery();
-            //connection.Close();
-
-
-
-
-
-
-            string sqlQuery = @"SELECT * FROM " + table;
             DataTable myDataTable = new DataTable();
-            using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
+
+            SqlCommand myCommand = connection.CreateCommand();
+            myCommand.Connection = connection;
+            myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandType = CommandType.StoredProcedure;
+              myCommand.Parameters.AddWithValue("@ViewName", table);
+            using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
-               // MessageBox.Show(connection.ToString());
-               // connection.Open();
+                connection.Open();
                 myDataAdapter.Fill(myDataTable);
-               // connection.Close();
-                //connection.Dispose();
-                return myDataTable;
+                connection.Close();
             }
+            return myDataTable;
+
+
+
+
+
+            //string sqlQuery = @"SELECT * FROM " + table;
+            //DataTable myDataTable = new DataTable();
+            //using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
+            //{
+            //   // MessageBox.Show(connection.ToString());
+            //   // connection.Open();
+            //    myDataAdapter.Fill(myDataTable);
+            //   // connection.Close();
+            //    //connection.Dispose();
+            //    return myDataTable;
+            //}
         }
 
         public DataTable SearchForItem(string table, string item)
         {
-            string sqlQuery = null;
             DataTable myDataTable = new DataTable();
 
-            switch (table)
+            SqlCommand myCommand = connection.CreateCommand();
+            myCommand.Connection = connection;
+
+            if (table == "Movies")
             {
-                case "Movies":
-                    sqlQuery = @"SELECT * FROM " + table + " WHERE Title LIKE '%" + item + "%' ORDER by Title";
-                    //   DataTable myDataTable = new DataTable();
-                    using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
-                    {
-                        connection.Open();
-                        myDataAdapter.Fill(myDataTable);
-                        connection.Close();
-                        return myDataTable;
-                    }
-                case "Customer":
-                    sqlQuery = @"SELECT * FROM " + table + " WHERE LastName LIKE '" + item + "%' ORDER by LastName";
-                    //  DataTable myDataTable = new DataTable();
-                    using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
-                    {
-                        connection.Open();
-                        myDataAdapter.Fill(myDataTable);
-                        connection.Close();
-                        return myDataTable;
-                    }
-                default:
-                    MessageBox.Show("Oops! Database.SearchForItem");
-                    return null;
+                myCommand.CommandText = "FindFromMovies";
+            }else if(table== "Customer")
+
+
+            { myCommand.CommandText = "FindFromCustomer";
+                    
             }
+           
+
+
+           // myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandType = CommandType.StoredProcedure;
+            myCommand.Parameters.AddWithValue("@Find", item);
+            using (myDataAdapter = new SqlDataAdapter(myCommand))
+            {
+                connection.Open();
+                myDataAdapter.Fill(myDataTable);
+                connection.Close();
+            }
+            return myDataTable;
+
+            
+            //string sqlQuery = null;
+            //DataTable myDataTable = new DataTable();
+
+            //switch (table)
+            //{
+            //    case "Movies":
+            //        sqlQuery = @"SELECT * FROM " + table + " WHERE Title LIKE '%" + item + "%' ORDER by Title";
+            //        //   DataTable myDataTable = new DataTable();
+            //        using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
+            //        {
+            //            connection.Open();
+            //            myDataAdapter.Fill(myDataTable);
+            //            connection.Close();
+            //            return myDataTable;
+            //        }
+            //    case "Customer":
+            //        sqlQuery = @"SELECT * FROM " + table + " WHERE LastName LIKE '" + item + "%' ORDER by LastName";
+            //        //  DataTable myDataTable = new DataTable();
+            //        using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
+            //        {
+            //            connection.Open();
+            //            myDataAdapter.Fill(myDataTable);
+            //            connection.Close();
+            //            return myDataTable;
+            //        }
+            //    default:
+            //        MessageBox.Show("Oops! Database.SearchForItem");
+            //        return null;
+            //}
         }
 
         public DataTable RentalDataSelect(string select)
         {
             DataTable myDataTable = new DataTable();
 
+            SqlCommand myCommand = connection.CreateCommand();
+            myCommand.Connection = connection;
 
-            //TO DO: Remove all sql queries and replace with procedure calls.
-            string sqlQuery =
-                @"SELECT dbo.RentedMovies.RMID, dbo.Customer.FirstName, dbo.Customer.LastName, dbo.Movies.Title, dbo.RentedMovies.DateRented, dbo.RentedMovies.DateReturned FROM dbo.Customer INNER JOIN dbo.RentedMovies ON dbo.Customer.CustID = dbo.RentedMovies.CustIDFK INNER JOIN dbo.Movies ON dbo.RentedMovies.MovieIDFK = dbo.Movies.MovieID";
-            string modifier = "";
-            if (select != "All")
+            if (select == "NOTAll")
             {
-                modifier = " WHERE(dbo.RentedMovies.DateReturned IS NULL)";
+                myCommand.CommandText = "ShowAllFrom";
+                myCommand.Parameters.AddWithValue("@ViewName", "CurrentRentals");
+            }
+            else if (select == "All")
+
+
+            {
+                myCommand.CommandText = "ShowAllFrom";
+                myCommand.Parameters.AddWithValue("@ViewName", "AllRentals");
             }
 
-            using (myDataAdapter = new SqlDataAdapter(sqlQuery + modifier, connection))
+
+
+            // myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandType = CommandType.StoredProcedure;
+           // myCommand.Parameters.AddWithValue("@Find", item);
+            using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
-                
                 connection.Open();
                 myDataAdapter.Fill(myDataTable);
                 connection.Close();
-               // connection.Dispose();
-                return myDataTable;
             }
+            return myDataTable;
+
+
+
+            //DataTable myDataTable = new DataTable();
+
+
+            ////TO DO: Remove all sql queries and replace with procedure calls.
+            //string sqlQuery =
+            //    @"SELECT dbo.RentedMovies.RMID, dbo.Customer.FirstName, dbo.Customer.LastName, dbo.Movies.Title, dbo.RentedMovies.DateRented, dbo.RentedMovies.DateReturned FROM dbo.Customer INNER JOIN dbo.RentedMovies ON dbo.Customer.CustID = dbo.RentedMovies.CustIDFK INNER JOIN dbo.Movies ON dbo.RentedMovies.MovieIDFK = dbo.Movies.MovieID";
+            //string modifier = "";
+            //if (select != "All")
+            //{
+            //    modifier = " WHERE(dbo.RentedMovies.DateReturned IS NULL)";
+            //}
+
+            //using (myDataAdapter = new SqlDataAdapter(sqlQuery + modifier, connection))
+            //{
+                
+            //    connection.Open();
+            //    myDataAdapter.Fill(myDataTable);
+            //    connection.Close();
+            //   // connection.Dispose();
+            //    return myDataTable;
+            //}
         }
      //rental return if returndate==null then returndate = date. make date field for debug, note date to be system date.
         public void ReturnRental(int rentalID, DateTime date)
