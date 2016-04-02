@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -55,6 +61,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

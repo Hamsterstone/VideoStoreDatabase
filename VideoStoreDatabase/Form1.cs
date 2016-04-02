@@ -68,7 +68,7 @@ namespace VideoStoreDatabase
         public void SearchBoxTyping(object sender, EventArgs e)
         {
             TextBox fakeTextBox = sender as TextBox;
-            dgvMovies.DataSource = null;
+            //dgvMovies.DataSource = null;
             try
             {
                 switch (fakeTextBox.Name)
@@ -138,11 +138,36 @@ namespace VideoStoreDatabase
                     if (e.RowIndex >= 0)
                     {
                         txtCustID.Text = fakeDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-                        txtCustName.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
-                        txtCustName.Text += fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
+                        txtCustFirstname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        txtCustLastname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
                         txtCustAddress.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
                         txtCustPhone.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
                         
+                    }
+                }else if (sender == dgvRentals)
+                {
+                    if (e.RowIndex >= 0)
+                    {
+
+                        txtMovieID.Text = "";
+                        txtMovieRating.Text = "";
+                        txtMovieYear.Text = "";
+                        txtMovieRentalCost.Text = "";
+                        txtMovieCopies.Text = "";
+                        txtMoviePlot.Text = "";
+                        txtMovieGenres.Text = "";
+                        txtCustID.Text = "";
+                        txtCustAddress.Text = "";
+                        txtCustPhone.Text = "";
+                        
+
+                        txtRentalID.Text = fakeDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                        txtCustFirstname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        txtCustLastname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
+                        txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+                        txtRentalDateRented.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        txtRentalDateReturned.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
+
                     }
                 }
             }
@@ -188,7 +213,88 @@ namespace VideoStoreDatabase
                 LoadDatabase();
             }
         }
+
+        private void btnAdminOnOff_Click(object sender, EventArgs e)
+        {
+            if (btnDeleteCustomer.Enabled == false) {
+                using (Form passwordForm = new PasswordForm())
+                {//REENABLE FOR FULL PROGRAM
+                   // if (passwordForm.ShowDialog() == DialogResult.OK)
+                    {
+
+                        btnAddCustomer.Enabled = true;
+                        btnUpdateCustomer.Enabled = true;
+                        btnDeleteCustomer.Enabled = true;
+                        btnAddMovie.Enabled = true;
+                        btnUpdateMovie.Enabled = true;
+                        btnDeleteMovie.Enabled = true;
+                        btnUpdateRental.Enabled = true;
+                        btnDeleteRental.Enabled = true;
+                    }
+                }
+
+            }else if (btnDeleteCustomer.Enabled == true)
+            {//REENABLE FOR FULL PROGRAM
+               // DialogResult dialogResult = MessageBox.Show("", "Turn off Admin controls?", MessageBoxButtons.YesNo);
+               // if (dialogResult == DialogResult.Yes)
+                {
+                    btnAddCustomer.Enabled = false;
+                    btnUpdateCustomer.Enabled = false;
+                    btnDeleteCustomer.Enabled = false;
+                    btnAddMovie.Enabled = false;
+                    btnUpdateMovie.Enabled = false;
+                    btnDeleteMovie.Enabled = false;
+                    btnUpdateRental.Enabled = false;
+                    btnDeleteRental.Enabled = false;
+                }
+               
+            }
+
+
+
+            
+        }
         //edit movie click: open new form to add/update/delete movies.
         //edit customers as above
+        private void btnAdminButton_Click(object sender, EventArgs e)
+        {
+            Button fakeButton = sender as Button;
+            string[] data = new[]
+            {
+                txtCustID.Text, txtCustFirstname.Text, txtCustLastname.Text, txtCustAddress.Text, txtCustPhone.Text,
+                txtCustDOB.Text, txtMovieID.Text, txtMovieTitle.Text, txtMovieYear.Text, txtMoviePlot.Text,
+                txtMovieRating.Text, txtMovieCopies.Text, txtMovieGenres.Text, txtMovieRentalCost.Text, txtRentalID.Text,
+                txtRentalDateRented.Text, txtRentalDateReturned.Text
+            };
+
+
+            Dictionary<string, string> dictData = new Dictionary<string, string>();
+            
+            dictData.Add("CustID",txtCustID.Text);
+            dictData.Add("CustFirstname", txtCustFirstname.Text);
+            dictData.Add("CustLastname", txtCustLastname.Text);
+            dictData.Add("CustAddress", txtCustAddress.Text);
+            dictData.Add("CustPhone", txtCustPhone.Text);
+            dictData.Add("CustDOB", txtCustDOB.Text);
+            dictData.Add("MovieID", txtMovieID.Text);
+            dictData.Add("MovieTitle", txtMovieTitle.Text);
+            dictData.Add("MovieYear", txtMovieYear.Text);
+            dictData.Add("MoviePlot", txtMoviePlot.Text);
+            dictData.Add("MovieRating", txtMovieRating.Text);
+            dictData.Add("MovieCopies", txtMovieCopies.Text);
+            dictData.Add("MovieGenres", txtMovieGenres.Text);
+            dictData.Add("MovieRentalCost", txtMovieRentalCost.Text);
+            dictData.Add("RentalID", txtRentalID.Text);
+            dictData.Add("RentalDateRented", txtRentalDateRented.Text);
+            dictData.Add("RentalDateReturned", txtRentalDateReturned.Text);
+
+
+
+            string buttonName = fakeButton.Text;
+
+            myDatabase.AdminTools(dictData,buttonName);
+            LoadDatabase();
+        }
+        
     }
 }
