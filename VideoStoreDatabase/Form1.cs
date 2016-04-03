@@ -128,10 +128,12 @@ namespace VideoStoreDatabase
                         txtMovieRating.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
                         txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
                         txtMovieYear.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
-                        txtMovieRentalCost.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        txtMovieRentalCost.Text = "$"+Convert.ToString(RentalCalculator(txtMovieYear.Text));
+                        //fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
                         txtMovieCopies.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
                         txtMoviePlot.Text = fakeDataGridView.Rows[e.RowIndex].Cells[6].Value.ToString();
                         txtMovieGenres.Text = fakeDataGridView.Rows[e.RowIndex].Cells[7].Value.ToString();
+                        
                     }
                 }else if (sender == dgvCustomers)
                 {
@@ -253,6 +255,27 @@ namespace VideoStoreDatabase
 
 
             
+        }
+
+        public int RentalCalculator(string movieYear)
+        {
+            int year = 0;
+            try
+            {
+                year = int.Parse(movieYear);
+               // MessageBox.Show(Convert.ToString(year));
+            }
+            catch
+            {
+                MessageBox.Show("Nope");
+            }
+            int rentCost=0;
+            if (DateTime.Now.Year - year > 5)
+            {
+                rentCost = 2;
+            }
+            else rentCost = 5;
+            return rentCost;
         }
         //edit movie click: open new form to add/update/delete movies.
         //edit customers as above
