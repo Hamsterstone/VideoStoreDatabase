@@ -88,6 +88,11 @@
             this.txtRentalID = new System.Windows.Forms.TextBox();
             this.lblCustLastname = new System.Windows.Forms.Label();
             this.txtCustLastname = new System.Windows.Forms.TextBox();
+            this.tabPageReports = new System.Windows.Forms.TabPage();
+            this.dgvReports = new System.Windows.Forms.DataGridView();
+            this.rbtMostPopMovie = new System.Windows.Forms.RadioButton();
+            this.gbxReportSelect = new System.Windows.Forms.GroupBox();
+            this.rbtRentalsByCust = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
@@ -96,6 +101,9 @@
             this.tabPageRentals.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
             this.gbxRentalSelect.SuspendLayout();
+            this.tabPageReports.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).BeginInit();
+            this.gbxReportSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvMovies
@@ -112,6 +120,7 @@
             this.tabControl1.Controls.Add(this.tabPageMovies);
             this.tabControl1.Controls.Add(this.tabPageCustomers);
             this.tabControl1.Controls.Add(this.tabPageRentals);
+            this.tabControl1.Controls.Add(this.tabPageReports);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -224,7 +233,7 @@
             this.rbtRentalAll.TabIndex = 1;
             this.rbtRentalAll.Text = "All Rentals";
             this.rbtRentalAll.UseVisualStyleBackColor = true;
-            this.rbtRentalAll.CheckedChanged += new System.EventHandler(this.RentalSelect);
+            this.rbtRentalAll.CheckedChanged += new System.EventHandler(this.RentalSelect_Clicked);
             // 
             // rbtRentalCurrent
             // 
@@ -237,7 +246,7 @@
             this.rbtRentalCurrent.TabStop = true;
             this.rbtRentalCurrent.Text = "Current Rentals";
             this.rbtRentalCurrent.UseVisualStyleBackColor = true;
-            this.rbtRentalCurrent.CheckedChanged += new System.EventHandler(this.RentalSelect);
+            this.rbtRentalCurrent.CheckedChanged += new System.EventHandler(this.RentalSelect_Clicked);
             // 
             // btnIssueMovie
             // 
@@ -639,6 +648,59 @@
             this.txtCustLastname.Size = new System.Drawing.Size(118, 20);
             this.txtCustLastname.TabIndex = 98;
             // 
+            // tabPageReports
+            // 
+            this.tabPageReports.Controls.Add(this.gbxReportSelect);
+            this.tabPageReports.Controls.Add(this.dgvReports);
+            this.tabPageReports.Location = new System.Drawing.Point(4, 22);
+            this.tabPageReports.Name = "tabPageReports";
+            this.tabPageReports.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageReports.Size = new System.Drawing.Size(730, 321);
+            this.tabPageReports.TabIndex = 3;
+            this.tabPageReports.Text = "Reports";
+            this.tabPageReports.UseVisualStyleBackColor = true;
+            // 
+            // dgvReports
+            // 
+            this.dgvReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReports.Location = new System.Drawing.Point(0, 0);
+            this.dgvReports.Name = "dgvReports";
+            this.dgvReports.Size = new System.Drawing.Size(470, 321);
+            this.dgvReports.TabIndex = 0;
+            // 
+            // rbtMostPopMovie
+            // 
+            this.rbtMostPopMovie.AutoSize = true;
+            this.rbtMostPopMovie.Location = new System.Drawing.Point(16, 19);
+            this.rbtMostPopMovie.Name = "rbtMostPopMovie";
+            this.rbtMostPopMovie.Size = new System.Drawing.Size(124, 17);
+            this.rbtMostPopMovie.TabIndex = 1;
+            this.rbtMostPopMovie.Text = "Most Popular Movies";
+            this.rbtMostPopMovie.UseVisualStyleBackColor = true;
+            this.rbtMostPopMovie.Click += new System.EventHandler(this.ReportSelect_Clicked);
+            // 
+            // gbxReportSelect
+            // 
+            this.gbxReportSelect.Controls.Add(this.rbtRentalsByCust);
+            this.gbxReportSelect.Controls.Add(this.rbtMostPopMovie);
+            this.gbxReportSelect.Location = new System.Drawing.Point(476, 6);
+            this.gbxReportSelect.Name = "gbxReportSelect";
+            this.gbxReportSelect.Size = new System.Drawing.Size(248, 309);
+            this.gbxReportSelect.TabIndex = 2;
+            this.gbxReportSelect.TabStop = false;
+            this.gbxReportSelect.Text = "Reports";
+            // 
+            // rbtRentalsByCust
+            // 
+            this.rbtRentalsByCust.AutoSize = true;
+            this.rbtRentalsByCust.Location = new System.Drawing.Point(16, 43);
+            this.rbtRentalsByCust.Name = "rbtRentalsByCust";
+            this.rbtRentalsByCust.Size = new System.Drawing.Size(122, 17);
+            this.rbtRentalsByCust.TabIndex = 2;
+            this.rbtRentalsByCust.Text = "Rentals by Customer";
+            this.rbtRentalsByCust.UseVisualStyleBackColor = true;
+            this.rbtRentalsByCust.Click += new System.EventHandler(this.ReportSelect_Clicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -707,6 +769,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).EndInit();
             this.gbxRentalSelect.ResumeLayout(false);
             this.gbxRentalSelect.PerformLayout();
+            this.tabPageReports.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).EndInit();
+            this.gbxReportSelect.ResumeLayout(false);
+            this.gbxReportSelect.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -774,6 +840,11 @@
         private System.Windows.Forms.TextBox txtRentalID;
         private System.Windows.Forms.Label lblCustLastname;
         private System.Windows.Forms.TextBox txtCustLastname;
+        private System.Windows.Forms.TabPage tabPageReports;
+        private System.Windows.Forms.GroupBox gbxReportSelect;
+        private System.Windows.Forms.RadioButton rbtRentalsByCust;
+        private System.Windows.Forms.RadioButton rbtMostPopMovie;
+        private System.Windows.Forms.DataGridView dgvReports;
     }
 }
 

@@ -15,6 +15,7 @@ namespace VideoStoreDatabase
         public PasswordForm()
         {
             InitializeComponent();
+
             txtPassword.Focus();
         }
 
@@ -32,7 +33,7 @@ namespace VideoStoreDatabase
             {
                 // The password is invalid.
                 txtPassword.Clear();
-                MessageBox.Show("Inivalid password.");
+                MessageBox.Show("ACCESS DENIED");
                 txtPassword.Focus();
             }
         }

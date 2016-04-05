@@ -13,11 +13,12 @@ namespace VideoStoreDatabase
     public partial class Form1 : Form
     {
         Database myDatabase = new Database();
-
+        Dictionary<string, int> ratingDictionary=new Dictionary<string, int>();
         public Form1()
         {
             InitializeComponent();
             LoadDatabase();
+            PopulateRatingDictionary();
         }
 
         //load first view
@@ -32,8 +33,9 @@ namespace VideoStoreDatabase
                 dgvMovies.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dgvCustomers.DataSource = myDatabase.FillDatatable("Customer");
                 dgvCustomers.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                dgvRentals.DataSource = myDatabase.RentalDataSelect("NOTAll");
-                dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                RentalSelect();
+                //dgvRentals.DataSource = myDatabase.RentalDataSelect("NOTAll");
+                //dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
             catch (Exception ex)
             {
@@ -41,6 +43,24 @@ namespace VideoStoreDatabase
             }
         }
 
+        public void PopulateRatingDictionary()
+        {
+            // TOO MANY HEADACHES
+            ratingDictionary.Add("Approved", 0);
+            ratingDictionary.Add("G", 0);
+            ratingDictionary.Add("N/A", 18);
+            ratingDictionary.Add("NC-17", 18);
+            ratingDictionary.Add("Not Rated", 18);
+            ratingDictionary.Add("PG", 0);
+            ratingDictionary.Add("PG-13", 13);
+            ratingDictionary.Add("R", 18);
+            ratingDictionary.Add("TV-14", 14);
+            ratingDictionary.Add("TV-MA", 16);
+            ratingDictionary.Add("TV-PG", 0);
+            ratingDictionary.Add("Unrated", 18);
+            ratingDictionary.Add("X", 18);
+            ratingDictionary.Add("M", 16);
+        }
 
         //load views on tab click
         private void TabClick(object sender, EventArgs e)
@@ -91,11 +111,13 @@ namespace VideoStoreDatabase
             }
         }
 
-        public void RentalSelect(object sender, EventArgs e)
+        public void RentalSelect_Clicked(object sender, EventArgs e)
         {
-            RadioButton fakeRadioButton = sender as RadioButton;
-            if (fakeRadioButton.Name == "rbtRentalCurrent")
-            {
+            RentalSelect();
+        }
+        public void RentalSelect()
+        {
+           
                 switch (rbtRentalCurrent.Checked)
                 {
                     case true:
@@ -108,7 +130,7 @@ namespace VideoStoreDatabase
                         dgvRentals.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
                         break;
-                }
+             
             }
         }
 
@@ -125,14 +147,14 @@ namespace VideoStoreDatabase
                     if (e.RowIndex >= 0)
                     {
                         txtMovieID.Text = fakeDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-                        txtMovieRating.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
-                        txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
-                        txtMovieYear.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+                        txtMovieRating.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+                        txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        txtMovieYear.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
                         txtMovieRentalCost.Text = "$"+Convert.ToString(RentalCalculator(txtMovieYear.Text));
                         //fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
-                        txtMovieCopies.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
-                        txtMoviePlot.Text = fakeDataGridView.Rows[e.RowIndex].Cells[6].Value.ToString();
-                        txtMovieGenres.Text = fakeDataGridView.Rows[e.RowIndex].Cells[7].Value.ToString();
+                        txtMovieCopies.Text = fakeDataGridView.Rows[e.RowIndex].Cells[6].Value.ToString();
+                        txtMoviePlot.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        txtMovieGenres.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
                         
                     }
                 }else if (sender == dgvCustomers)
@@ -144,7 +166,8 @@ namespace VideoStoreDatabase
                         txtCustLastname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
                         txtCustAddress.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
                         txtCustPhone.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
-                        
+                        txtCustDOB.Text= fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
+
                     }
                 }else if (sender == dgvRentals)
                 {
@@ -167,9 +190,9 @@ namespace VideoStoreDatabase
                         txtCustFirstname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
                         txtCustLastname.Text = fakeDataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
                         txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
-                        txtRentalDateRented.Text = fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
-                        txtRentalDateReturned.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
-
+                        txtRentalDateRented.Text = DateTime.Parse( fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()).ToShortDateString();//.ToString();
+                        //txtRentalDateReturned.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
+                        txtRentalDateReturned.Text = DateTime.Parse(fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()).ToShortDateString();
                     }
                 }
             }
@@ -189,15 +212,49 @@ namespace VideoStoreDatabase
             }
             else
             {
-                DateTime date = monthCalendar1.SelectionStart;
-                int movieID = Convert.ToInt32(txtMovieID.Text);
-                int customerID = Convert.ToInt32(txtCustID.Text);
-                //Note: Make sure you pass movieID&CustomerID in the right order or everything goes pear shaped.
-                myDatabase.CreateNewRental(movieID, customerID, date);
-                LoadDatabase();
+                if (OkToRent()==false)
+                {
+                    MessageBox.Show("Rental Denied");
+                }
+                else
+                {
+                    DateTime date = monthCalendar1.SelectionStart;
+                    int movieID = Convert.ToInt32(txtMovieID.Text);
+                    int customerID = Convert.ToInt32(txtCustID.Text);
+                    //Note: Make sure you pass movieID&CustomerID in the right order or everything goes pear shaped.
+                    myDatabase.CreateNewRental(movieID, customerID, date);
+                    LoadDatabase();
+                }
             }
         }
 
+        public bool OkToRent()
+        {
+            if (txtCustDOB.Text != "" && IsOldEnough(DateTime.Parse(txtCustDOB.Text), txtMovieRating.Text) == false)
+            {
+                DialogResult dialogResult = MessageBox.Show("Allow rental?",
+                    "WARNING: Customer may be too young to rent this movie.", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    return true;
+                }
+                 return false;
+            }
+            return true;
+        }
+
+        public bool IsOldEnough(DateTime dob, string rating)
+        {
+           TimeSpan ageTimespan = DateTime.Now.Subtract(dob);
+            int age = ageTimespan.Days/365;
+            int ratingAge = ratingDictionary[rating];
+            if (age > ratingAge)
+            {
+                return true;
+            }
+            //MessageBox.Show(age.ToString());
+            return false;
+        }
         //return rental: pass rental ID and date to db method
         public void btnReturnRental_Click(object sender, EventArgs e)
         {
@@ -207,20 +264,26 @@ namespace VideoStoreDatabase
                 MessageBox.Show("Select a single date.");
 
             }
-            else
-            {
-                DateTime date = monthCalendar1.SelectionStart;
-                int rentalID = Convert.ToInt32(fakeDataGridView.Rows[fakeDataGridView.CurrentCell.RowIndex].Cells[0].Value.ToString());//not working, need selected row index
-                myDatabase.ReturnRental(rentalID, date);
-                LoadDatabase();
-            }
+            
+
+
+                else
+                {
+                    DateTime date = monthCalendar1.SelectionStart;
+                    int rentalID =
+                        Convert.ToInt32(
+                            fakeDataGridView.Rows[fakeDataGridView.CurrentCell.RowIndex].Cells[0].Value.ToString());
+                    myDatabase.ReturnRental(rentalID, date);
+                    LoadDatabase();
+                }
+            
         }
 
         private void btnAdminOnOff_Click(object sender, EventArgs e)
         {
             if (btnDeleteCustomer.Enabled == false) {
                 using (Form passwordForm = new PasswordForm())
-                {//REENABLE FOR FULL PROGRAM
+                {//RE-ENABLE FOR FULL PROGRAM
                    // if (passwordForm.ShowDialog() == DialogResult.OK)
                     {
 
@@ -236,7 +299,7 @@ namespace VideoStoreDatabase
                 }
 
             }else if (btnDeleteCustomer.Enabled == true)
-            {//REENABLE FOR FULL PROGRAM
+            {//RE-ENABLE FOR FULL PROGRAM
                // DialogResult dialogResult = MessageBox.Show("", "Turn off Admin controls?", MessageBoxButtons.YesNo);
                // if (dialogResult == DialogResult.Yes)
                 {
@@ -267,7 +330,7 @@ namespace VideoStoreDatabase
             }
             catch
             {
-                MessageBox.Show("Nope");
+                MessageBox.Show("Year format not supported");
             }
             int rentCost=0;
             if (DateTime.Now.Year - year > 5)
@@ -318,6 +381,33 @@ namespace VideoStoreDatabase
             myDatabase.AdminTools(dictData,buttonName);
             LoadDatabase();
         }
-        
+        public void ReportSelect_Clicked(object sender, EventArgs e)
+        {
+            RadioButton fakeRadioButton=sender as RadioButton;
+            string name = fakeRadioButton.Name;
+            ReportSelect(name);
+        }
+        public void ReportSelect(string name)
+        {
+
+            switch (name)
+            {
+                case "rbtMostPopMovie":
+                    dgvReports.DataSource = myDatabase.ReportSelect("MostPopMov");
+                    dgvReports.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                    break;
+                case "rbtRentalsByCust":
+                    dgvReports.DataSource = myDatabase.ReportSelect("CustMostRent");
+                    dgvReports.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                    break;
+
+            }
+        }
+        //private void btnTest_Click(object sender, EventArgs e)
+        //{
+        //    IsOldEnough(DateTime.Parse(txtCustDOB.Text), txtMovieRating.Text);
+        //}
     }
 }

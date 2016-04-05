@@ -13,12 +13,15 @@ namespace VideoStoreDatabase
 {
     public class Database
     {
+        //Define fields
         SqlConnection connection = new SqlConnection();
         SqlCommand command = new SqlCommand();
         private SqlDataAdapter myDataAdapter = new SqlDataAdapter();
 
+        //
         public Database()
         {
+
             string connectionString =
                 @"Data Source=TREAD\SQLEXPRESS;Initial Catalog=VBMoviesFullData;Integrated Security=True";
             connection.ConnectionString = connectionString;
@@ -33,7 +36,7 @@ namespace VideoStoreDatabase
             myCommand.Connection = connection;
             myCommand.CommandText = "ShowAllFrom";
             myCommand.CommandType = CommandType.StoredProcedure;
-              myCommand.Parameters.AddWithValue("@ViewName", table);
+            myCommand.Parameters.AddWithValue("@ViewName", table);
             using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
                 connection.Open();
@@ -69,16 +72,18 @@ namespace VideoStoreDatabase
             if (table == "Movies")
             {
                 myCommand.CommandText = "FindFromMovies";
-            }else if(table== "Customer")
-
-
-            { myCommand.CommandText = "FindFromCustomer";
-                    
             }
-           
+            else if (table == "Customer")
 
 
-           // myCommand.CommandText = "ShowAllFrom";
+            {
+                myCommand.CommandText = "FindFromCustomer";
+
+            }
+
+
+
+            // myCommand.CommandText = "ShowAllFrom";
             myCommand.CommandType = CommandType.StoredProcedure;
             myCommand.Parameters.AddWithValue("@Find", item);
             using (myDataAdapter = new SqlDataAdapter(myCommand))
@@ -89,7 +94,7 @@ namespace VideoStoreDatabase
             }
             return myDataTable;
 
-            
+
             //string sqlQuery = null;
             //DataTable myDataTable = new DataTable();
 
@@ -145,7 +150,7 @@ namespace VideoStoreDatabase
 
             // myCommand.CommandText = "ShowAllFrom";
             myCommand.CommandType = CommandType.StoredProcedure;
-           // myCommand.Parameters.AddWithValue("@Find", item);
+            // myCommand.Parameters.AddWithValue("@Find", item);
             using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
                 connection.Open();
@@ -170,7 +175,7 @@ namespace VideoStoreDatabase
 
             //using (myDataAdapter = new SqlDataAdapter(sqlQuery + modifier, connection))
             //{
-                
+
             //    connection.Open();
             //    myDataAdapter.Fill(myDataTable);
             //    connection.Close();
@@ -178,7 +183,8 @@ namespace VideoStoreDatabase
             //    return myDataTable;
             //}
         }
-     //rental return if returndate==null then returndate = date. make date field for debug, note date to be system date.
+
+        //rental return if returndate==null then returndate = date. make date field for debug, note date to be system date.
         public void ReturnRental(int rentalID, DateTime date)
         {
             SqlCommand myCommand = connection.CreateCommand();
@@ -192,24 +198,24 @@ namespace VideoStoreDatabase
             connection.Close();
 
 
-           // SqlCommand myCommand=new SqlCommand("UPDATE RentedMovies set DateReturned=@Date where RMID=@rentalID");
-           // //using (
-           // myCommand.Connection = connection;
-           //// {
-           //     if (myCommand.Connection.ConnectionString != string.Empty)
-           //     {
-           //        // myCommand.Parameters.AddWithValue("@MovieID", movieID);
-           //     myCommand.Parameters.AddWithValue("@rentalID", rentalID);
-           //     myCommand.Parameters.AddWithValue("@date", date);
-           //     connection.Open();
-           //     myCommand.ExecuteNonQuery();
-           //     connection.Close();
-           //  }
-           // else
-           // {
-           //     MessageBox.Show("no connectionstring");
+            // SqlCommand myCommand=new SqlCommand("UPDATE RentedMovies set DateReturned=@Date where RMID=@rentalID");
+            // //using (
+            // myCommand.Connection = connection;
+            //// {
+            //     if (myCommand.Connection.ConnectionString != string.Empty)
+            //     {
+            //        // myCommand.Parameters.AddWithValue("@MovieID", movieID);
+            //     myCommand.Parameters.AddWithValue("@rentalID", rentalID);
+            //     myCommand.Parameters.AddWithValue("@date", date);
+            //     connection.Open();
+            //     myCommand.ExecuteNonQuery();
+            //     connection.Close();
+            //  }
+            // else
+            // {
+            //     MessageBox.Show("no connectionstring");
 
-           // }
+            // }
 
         } //}
         //rental issue, take movieID, CustID, date(see above) create new rental.
@@ -220,7 +226,7 @@ namespace VideoStoreDatabase
                 SqlCommand myCommand = connection.CreateCommand();
                 myCommand.Connection = connection;
                 myCommand.CommandText = "CreateRental";
-                myCommand.CommandType=CommandType.StoredProcedure;
+                myCommand.CommandType = CommandType.StoredProcedure;
                 myCommand.Parameters.AddWithValue("@MovieIDFK", movieID);
                 myCommand.Parameters.AddWithValue("@CustomerIDFK", customerID);
                 myCommand.Parameters.AddWithValue("@DateRented", date);
@@ -231,14 +237,14 @@ namespace VideoStoreDatabase
                 //    new SqlCommand(
                 //        @"INSERT INTO RentedMovies(MovieIDFK,CustIDFK,DateRented) VALUES(@movieID,@customerID,@date)");
                 //    myCommand.Connection = connection;
-                
+
                 //    myCommand.Parameters.AddWithValue("@MovieID", movieID);
                 //    myCommand.Parameters.AddWithValue("@CustomerID", customerID);
                 //    myCommand.Parameters.AddWithValue("@date", date);
                 //    connection.Open();
                 //    myCommand.ExecuteNonQuery();
                 //    connection.Close();
-                
+
 
             }
             catch (Exception ex)
@@ -248,38 +254,17 @@ namespace VideoStoreDatabase
             }
         }
 
-        public void AdminTools(Dictionary<string, string> data,string action)
+        public void AdminTools(Dictionary<string, string> data, string action)
         {
-            /*// txtCustID.Text, txtCustFirstname.Text, txtCustLastname.Text, txtCustAddress.Text, txtCustPhone.Text,txtCustDOB.Text, txtMovieID.Text, txtMovieTitle.Text, txtMovieYear.Text, txtMoviePlot.Text,txtMovieRating.Text, txtMovieCopies.Text, txtMovieGenres.Text, txtMovieRentalCost.Text, txtRentalID.Text,txtRentalDateRented.Text, txtRentalDateReturned.Text
-            //Butons: Add,Update,Delete: Movie,Customer,Rental
-            dictData.Add("CustID",txtCustID.Text);
-            dictData.Add("CustFirstname", txtCustFirstname.Text);
-            dictData.Add("CustLastname", txtCustLastname.Text);
-            dictData.Add("CustAddress", txtCustAddress.Text);
-            dictData.Add("CustPhone", txtCustPhone.Text);
-            dictData.Add("CustDOB", txtCustDOB.Text);
-            dictData.Add("MovieID", txtMovieID.Text);
-            dictData.Add("MovieTitle", txtMovieTitle.Text);
-            dictData.Add("MovieYear", txtMovieYear.Text);
-            dictData.Add("MoviePlot", txtMoviePlot.Text);
-            dictData.Add("MovieRating", txtMovieRating.Text);
-            dictData.Add("MovieCopies", txtMovieCopies.Text);
-            dictData.Add("MovieGenres", txtMovieGenres.Text);
-            dictData.Add("MovieRentalCost", txtMovieRentalCost.Text);
-            dictData.Add("RentalID", txtRentalID.Text);
-            dictData.Add("RentalDateRented", txtRentalDateRented.Text);
-            dictData.Add("RentalDateReturned", txtRentalDateReturned.Text);
 
-
-            */
             try
             {
                 SqlCommand myCommand = connection.CreateCommand();
                 myCommand.Connection = connection;
                 switch (action)
-            {
-                case "Add Movie":
-                    myCommand.CommandText ="AdminAddMovie";
+                {
+                    case "Add Movie":
+                        myCommand.CommandText = "AdminAddMovie";
                         myCommand.Parameters.AddWithValue("@MovieTitleIn", data["MovieTitle"]);
                         myCommand.Parameters.AddWithValue("@MovieYearIn", data["MovieYear"]);
                         myCommand.Parameters.AddWithValue("@MoviePlotIn", data["MoviePlot"]);
@@ -287,8 +272,8 @@ namespace VideoStoreDatabase
                         myCommand.Parameters.AddWithValue("@MovieCopiesIn", data["MovieCopies"]);
                         myCommand.Parameters.AddWithValue("@MovieGenresIn", data["MovieGenres"]);
                         break;
-                case "Update Movie":
-                    myCommand.CommandText ="AdminUpdateMovie";
+                    case "Update Movie":
+                        myCommand.CommandText = "AdminUpdateMovie";
                         myCommand.Parameters.AddWithValue("@MovieIDIn", data["MovieID"]);
                         myCommand.Parameters.AddWithValue("@MovieTitleIn", data["MovieTitle"]);
                         myCommand.Parameters.AddWithValue("@MovieYearIn", data["MovieYear"]);
@@ -298,16 +283,16 @@ namespace VideoStoreDatabase
                         myCommand.Parameters.AddWithValue("@MovieGenresIn", data["MovieGenres"]);
 
                         break;
-                case "Delete Movie":
-                    myCommand.CommandText = "AdminDelete";
+                    case "Delete Movie":
+                        myCommand.CommandText = "AdminDelete";
                         myCommand.Parameters.AddWithValue("@TableNameIn", "Movies");
                         myCommand.Parameters.AddWithValue("@ColumnNameIn", "MovieID");
                         myCommand.Parameters.AddWithValue("@IDNumber", data["MovieID"]);
 
                         break;
-                case "Add Customer":
-                    myCommand.CommandText ="AdminAddCustomer";
-                       // myCommand.Parameters.AddWithValue("@MCustIDIn", data["CustID"]);
+                    case "Add Customer":
+                        myCommand.CommandText = "AdminAddCustomer";
+                        // myCommand.Parameters.AddWithValue("@MCustIDIn", data["CustID"]);
                         myCommand.Parameters.AddWithValue("@CustFirstnameIn", data["CustFirstname"]);
                         myCommand.Parameters.AddWithValue("@CustLastnameIn", data["CustLastname"]);
                         myCommand.Parameters.AddWithValue("@CustAddressIn", data["CustAddress"]);
@@ -316,8 +301,8 @@ namespace VideoStoreDatabase
                         //myCommand.Parameters.AddWithValue("@MovieGenresIn", data["MovieGenres"]);
 
                         break;
-                case "Update Customer":
-                    myCommand.CommandText ="AdminUpdateCustomer";
+                    case "Update Customer":
+                        myCommand.CommandText = "AdminUpdateCustomer";
                         myCommand.Parameters.AddWithValue("@CustIDIn", data["CustID"]);
                         myCommand.Parameters.AddWithValue("@CustFirstnameIn", data["CustFirstname"]);
                         myCommand.Parameters.AddWithValue("@CustLastnameIn", data["CustLastname"]);
@@ -326,40 +311,42 @@ namespace VideoStoreDatabase
                         myCommand.Parameters.AddWithValue("@CustDOBIn", data["CustDOB"]);
 
                         break;
-                case "Delete Customer":
-                    myCommand.CommandText = "AdminDelete";
+                    case "Delete Customer":
+                        myCommand.CommandText = "AdminDelete";
                         myCommand.Parameters.AddWithValue("@TableNameIn", "Customer");
                         myCommand.Parameters.AddWithValue("@ColumnNameIn", "CustID");
                         myCommand.Parameters.AddWithValue("@IDNumber", data["CustID"]);
                         break;
 
                     case "Update Rental":
-                    myCommand.CommandText ="AdminUpdateRental";
+                        myCommand.CommandText = "AdminUpdateRental";
                         myCommand.Parameters.AddWithValue("@RentalIDIn", data["RentalID"]);
-                        myCommand.Parameters.AddWithValue("@RentalDateRentedIn", data["RentalDateRented"]);
-                        myCommand.Parameters.AddWithValue("@RentalDateReturnedIn", data["RentalDateReturned"]);
-                        myCommand.Parameters.AddWithValue("@MoviePlotIn", data["MoviePlot"]);
-                        myCommand.Parameters.AddWithValue("@MovieRatingIn", data["MovieRating"]);
+                        myCommand.Parameters.AddWithValue("@RentalDateRentedIn",
+                            DateTime.Parse(data["RentalDateRented"]));
+                        myCommand.Parameters.AddWithValue("@RentalDateReturnedIn",
+                            DateTime.Parse(data["RentalDateReturned"]));
+                        //  myCommand.Parameters.AddWithValue("@MoviePlotIn", data["MoviePlot"]);
+                        //  myCommand.Parameters.AddWithValue("@MovieRatingIn", data["MovieRating"]);
 
                         break;
 
-                case "Delete Rental":
-                    myCommand.CommandText = "AdminDelete";
-                    myCommand.Parameters.AddWithValue("@TableNameIn", "RentedMovies");
-                    myCommand.Parameters.AddWithValue("@ColumnNameIn", "RMID");
-                    myCommand.Parameters.AddWithValue("@IDNumber", data["RentalID"]);
+                    case "Delete Rental":
+                        myCommand.CommandText = "AdminDelete";
+                        myCommand.Parameters.AddWithValue("@TableNameIn", "RentedMovies");
+                        myCommand.Parameters.AddWithValue("@ColumnNameIn", "RMID");
+                        myCommand.Parameters.AddWithValue("@IDNumber", data["RentalID"]);
 
-                    break;
-            }
-
-
+                        break;
+                }
 
 
 
-          
-               
+
+
+
+
                 myCommand.CommandType = CommandType.StoredProcedure;
-             
+
                 connection.Open();
                 myCommand.ExecuteNonQuery();
                 connection.Close();
@@ -397,7 +384,44 @@ namespace VideoStoreDatabase
 
 
         }
-     //add custDOB for age check on rental? discuss with Gary
+
+        public DataTable ReportSelect(string select)
+        {
+            DataTable myDataTable = new DataTable();
+
+            SqlCommand myCommand = connection.CreateCommand();
+            myCommand.Connection = connection;
+
+            if (select == "MostPopMov")
+            {
+               myCommand.Parameters.AddWithValue("@ViewName", "RentalByPopularity");
+            }
+            else if (select == "CustMostRent")
+
+
+            {
+               myCommand.Parameters.AddWithValue("@ViewName", "CustomersByNumOfRentals");
+            }
+
+
+
+             myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandType = CommandType.StoredProcedure;
+            // myCommand.Parameters.AddWithValue("@Find", item);
+            using (myDataAdapter = new SqlDataAdapter(myCommand))
+            {
+                connection.Open();
+                myDataAdapter.Fill(myDataTable);
+                connection.Close();
+            }
+            return myDataTable;
+
+
+        }
+    
+
+    //add custDOB for age check on rental? discuss with Gary
+
         public bool UnitTestConnection()
         {
             DataTable myDataTable = new DataTable();
