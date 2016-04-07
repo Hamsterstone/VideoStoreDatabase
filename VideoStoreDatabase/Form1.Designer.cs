@@ -35,6 +35,11 @@
             this.dgvCustomers = new System.Windows.Forms.DataGridView();
             this.tabPageRentals = new System.Windows.Forms.TabPage();
             this.dgvRentals = new System.Windows.Forms.DataGridView();
+            this.tabPageReports = new System.Windows.Forms.TabPage();
+            this.gbxReportSelect = new System.Windows.Forms.GroupBox();
+            this.rbtRentalsByCust = new System.Windows.Forms.RadioButton();
+            this.rbtMostPopMovie = new System.Windows.Forms.RadioButton();
+            this.dgvReports = new System.Windows.Forms.DataGridView();
             this.txtFindCustomer = new System.Windows.Forms.TextBox();
             this.txtFindMovie = new System.Windows.Forms.TextBox();
             this.lblFindMovie = new System.Windows.Forms.Label();
@@ -88,11 +93,6 @@
             this.txtRentalID = new System.Windows.Forms.TextBox();
             this.lblCustLastname = new System.Windows.Forms.Label();
             this.txtCustLastname = new System.Windows.Forms.TextBox();
-            this.tabPageReports = new System.Windows.Forms.TabPage();
-            this.dgvReports = new System.Windows.Forms.DataGridView();
-            this.rbtMostPopMovie = new System.Windows.Forms.RadioButton();
-            this.gbxReportSelect = new System.Windows.Forms.GroupBox();
-            this.rbtRentalsByCust = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
@@ -100,10 +100,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.tabPageRentals.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
-            this.gbxRentalSelect.SuspendLayout();
             this.tabPageReports.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).BeginInit();
             this.gbxReportSelect.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).BeginInit();
+            this.gbxRentalSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvMovies
@@ -125,7 +125,8 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(738, 347);
-            this.tabControl1.TabIndex = 1;
+            this.tabControl1.TabIndex = 20;
+            this.tabControl1.TabStop = false;
             // 
             // tabPageMovies
             // 
@@ -177,12 +178,66 @@
             this.dgvRentals.TabIndex = 1;
             this.dgvRentals.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_CellContentClick);
             // 
+            // tabPageReports
+            // 
+            this.tabPageReports.Controls.Add(this.gbxReportSelect);
+            this.tabPageReports.Controls.Add(this.dgvReports);
+            this.tabPageReports.Location = new System.Drawing.Point(4, 22);
+            this.tabPageReports.Name = "tabPageReports";
+            this.tabPageReports.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageReports.Size = new System.Drawing.Size(730, 321);
+            this.tabPageReports.TabIndex = 3;
+            this.tabPageReports.Text = "Reports";
+            this.tabPageReports.UseVisualStyleBackColor = true;
+            // 
+            // gbxReportSelect
+            // 
+            this.gbxReportSelect.Controls.Add(this.rbtRentalsByCust);
+            this.gbxReportSelect.Controls.Add(this.rbtMostPopMovie);
+            this.gbxReportSelect.Location = new System.Drawing.Point(476, 6);
+            this.gbxReportSelect.Name = "gbxReportSelect";
+            this.gbxReportSelect.Size = new System.Drawing.Size(248, 309);
+            this.gbxReportSelect.TabIndex = 2;
+            this.gbxReportSelect.TabStop = false;
+            this.gbxReportSelect.Text = "Reports";
+            // 
+            // rbtRentalsByCust
+            // 
+            this.rbtRentalsByCust.AutoSize = true;
+            this.rbtRentalsByCust.Location = new System.Drawing.Point(16, 43);
+            this.rbtRentalsByCust.Name = "rbtRentalsByCust";
+            this.rbtRentalsByCust.Size = new System.Drawing.Size(122, 17);
+            this.rbtRentalsByCust.TabIndex = 2;
+            this.rbtRentalsByCust.Text = "Rentals by Customer";
+            this.rbtRentalsByCust.UseVisualStyleBackColor = true;
+            this.rbtRentalsByCust.Click += new System.EventHandler(this.ReportSelect_Clicked);
+            // 
+            // rbtMostPopMovie
+            // 
+            this.rbtMostPopMovie.AutoSize = true;
+            this.rbtMostPopMovie.Location = new System.Drawing.Point(16, 19);
+            this.rbtMostPopMovie.Name = "rbtMostPopMovie";
+            this.rbtMostPopMovie.Size = new System.Drawing.Size(124, 17);
+            this.rbtMostPopMovie.TabIndex = 1;
+            this.rbtMostPopMovie.Text = "Most Popular Movies";
+            this.rbtMostPopMovie.UseVisualStyleBackColor = true;
+            this.rbtMostPopMovie.Click += new System.EventHandler(this.ReportSelect_Clicked);
+            // 
+            // dgvReports
+            // 
+            this.dgvReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReports.Location = new System.Drawing.Point(0, 0);
+            this.dgvReports.Name = "dgvReports";
+            this.dgvReports.Size = new System.Drawing.Size(470, 321);
+            this.dgvReports.TabIndex = 0;
+            this.dgvReports.TabStop = false;
+            // 
             // txtFindCustomer
             // 
             this.txtFindCustomer.Location = new System.Drawing.Point(841, 390);
             this.txtFindCustomer.Name = "txtFindCustomer";
             this.txtFindCustomer.Size = new System.Drawing.Size(100, 20);
-            this.txtFindCustomer.TabIndex = 2;
+            this.txtFindCustomer.TabIndex = 19;
             this.txtFindCustomer.Click += new System.EventHandler(this.SearchBoxClicked);
             this.txtFindCustomer.TextChanged += new System.EventHandler(this.SearchBoxTyping);
             // 
@@ -191,7 +246,7 @@
             this.txtFindMovie.Location = new System.Drawing.Point(841, 364);
             this.txtFindMovie.Name = "txtFindMovie";
             this.txtFindMovie.Size = new System.Drawing.Size(100, 20);
-            this.txtFindMovie.TabIndex = 3;
+            this.txtFindMovie.TabIndex = 18;
             this.txtFindMovie.Click += new System.EventHandler(this.SearchBoxClicked);
             this.txtFindMovie.TextChanged += new System.EventHandler(this.SearchBoxTyping);
             // 
@@ -201,7 +256,7 @@
             this.lblFindMovie.Location = new System.Drawing.Point(759, 364);
             this.lblFindMovie.Name = "lblFindMovie";
             this.lblFindMovie.Size = new System.Drawing.Size(59, 13);
-            this.lblFindMovie.TabIndex = 4;
+            this.lblFindMovie.TabIndex = 28;
             this.lblFindMovie.Text = "Find Movie";
             // 
             // lblFindCustomer
@@ -210,7 +265,7 @@
             this.lblFindCustomer.Location = new System.Drawing.Point(759, 390);
             this.lblFindCustomer.Name = "lblFindCustomer";
             this.lblFindCustomer.Size = new System.Drawing.Size(74, 13);
-            this.lblFindCustomer.TabIndex = 5;
+            this.lblFindCustomer.TabIndex = 27;
             this.lblFindCustomer.Text = "Find Customer";
             // 
             // gbxRentalSelect
@@ -220,7 +275,7 @@
             this.gbxRentalSelect.Location = new System.Drawing.Point(762, 416);
             this.gbxRentalSelect.Name = "gbxRentalSelect";
             this.gbxRentalSelect.Size = new System.Drawing.Size(179, 63);
-            this.gbxRentalSelect.TabIndex = 6;
+            this.gbxRentalSelect.TabIndex = 21;
             this.gbxRentalSelect.TabStop = false;
             this.gbxRentalSelect.Text = "Rented Movies";
             // 
@@ -243,7 +298,6 @@
             this.rbtRentalCurrent.Name = "rbtRentalCurrent";
             this.rbtRentalCurrent.Size = new System.Drawing.Size(98, 17);
             this.rbtRentalCurrent.TabIndex = 0;
-            this.rbtRentalCurrent.TabStop = true;
             this.rbtRentalCurrent.Text = "Current Rentals";
             this.rbtRentalCurrent.UseVisualStyleBackColor = true;
             this.rbtRentalCurrent.CheckedChanged += new System.EventHandler(this.RentalSelect_Clicked);
@@ -255,7 +309,8 @@
             this.btnIssueMovie.Location = new System.Drawing.Point(768, 485);
             this.btnIssueMovie.Name = "btnIssueMovie";
             this.btnIssueMovie.Size = new System.Drawing.Size(65, 55);
-            this.btnIssueMovie.TabIndex = 7;
+            this.btnIssueMovie.TabIndex = 24;
+            this.btnIssueMovie.TabStop = false;
             this.btnIssueMovie.Text = "Issue Movie";
             this.btnIssueMovie.UseVisualStyleBackColor = true;
             this.btnIssueMovie.Click += new System.EventHandler(this.btnIssueRental_Click);
@@ -267,7 +322,8 @@
             this.btnReturnMovie.Location = new System.Drawing.Point(851, 485);
             this.btnReturnMovie.Name = "btnReturnMovie";
             this.btnReturnMovie.Size = new System.Drawing.Size(65, 55);
-            this.btnReturnMovie.TabIndex = 8;
+            this.btnReturnMovie.TabIndex = 25;
+            this.btnReturnMovie.TabStop = false;
             this.btnReturnMovie.Text = "Return Movie";
             this.btnReturnMovie.UseVisualStyleBackColor = true;
             this.btnReturnMovie.Click += new System.EventHandler(this.btnReturnRental_Click);
@@ -277,7 +333,8 @@
             this.btnAdminOnOff.Location = new System.Drawing.Point(759, 34);
             this.btnAdminOnOff.Name = "btnAdminOnOff";
             this.btnAdminOnOff.Size = new System.Drawing.Size(312, 27);
-            this.btnAdminOnOff.TabIndex = 9;
+            this.btnAdminOnOff.TabIndex = 26;
+            this.btnAdminOnOff.TabStop = false;
             this.btnAdminOnOff.Text = "AdminTools";
             this.btnAdminOnOff.UseVisualStyleBackColor = true;
             this.btnAdminOnOff.Click += new System.EventHandler(this.btnAdminOnOff_Click);
@@ -287,91 +344,91 @@
             this.txtCustID.Location = new System.Drawing.Point(12, 383);
             this.txtCustID.Name = "txtCustID";
             this.txtCustID.Size = new System.Drawing.Size(44, 20);
-            this.txtCustID.TabIndex = 10;
+            this.txtCustID.TabIndex = 1;
             // 
             // txtCustFirstname
             // 
             this.txtCustFirstname.Location = new System.Drawing.Point(62, 383);
             this.txtCustFirstname.Name = "txtCustFirstname";
             this.txtCustFirstname.Size = new System.Drawing.Size(118, 20);
-            this.txtCustFirstname.TabIndex = 11;
+            this.txtCustFirstname.TabIndex = 2;
             // 
             // txtCustAddress
             // 
             this.txtCustAddress.Location = new System.Drawing.Point(310, 383);
             this.txtCustAddress.Name = "txtCustAddress";
             this.txtCustAddress.Size = new System.Drawing.Size(150, 20);
-            this.txtCustAddress.TabIndex = 12;
+            this.txtCustAddress.TabIndex = 4;
             // 
             // txtCustPhone
             // 
             this.txtCustPhone.Location = new System.Drawing.Point(466, 383);
             this.txtCustPhone.Name = "txtCustPhone";
             this.txtCustPhone.Size = new System.Drawing.Size(100, 20);
-            this.txtCustPhone.TabIndex = 13;
+            this.txtCustPhone.TabIndex = 5;
             // 
             // txtCustDOB
             // 
             this.txtCustDOB.Location = new System.Drawing.Point(572, 383);
             this.txtCustDOB.Name = "txtCustDOB";
             this.txtCustDOB.Size = new System.Drawing.Size(100, 20);
-            this.txtCustDOB.TabIndex = 14;
+            this.txtCustDOB.TabIndex = 6;
             // 
             // txtMovieID
             // 
             this.txtMovieID.Location = new System.Drawing.Point(12, 432);
             this.txtMovieID.Name = "txtMovieID";
             this.txtMovieID.Size = new System.Drawing.Size(44, 20);
-            this.txtMovieID.TabIndex = 15;
+            this.txtMovieID.TabIndex = 7;
             // 
             // txtMovieTitle
             // 
             this.txtMovieTitle.Location = new System.Drawing.Point(62, 432);
             this.txtMovieTitle.Name = "txtMovieTitle";
             this.txtMovieTitle.Size = new System.Drawing.Size(118, 20);
-            this.txtMovieTitle.TabIndex = 16;
+            this.txtMovieTitle.TabIndex = 8;
             // 
             // txtMovieYear
             // 
             this.txtMovieYear.Location = new System.Drawing.Point(186, 432);
             this.txtMovieYear.Name = "txtMovieYear";
             this.txtMovieYear.Size = new System.Drawing.Size(67, 20);
-            this.txtMovieYear.TabIndex = 17;
+            this.txtMovieYear.TabIndex = 9;
             // 
             // txtMoviePlot
             // 
             this.txtMoviePlot.Location = new System.Drawing.Point(259, 432);
             this.txtMoviePlot.Name = "txtMoviePlot";
             this.txtMoviePlot.Size = new System.Drawing.Size(289, 20);
-            this.txtMoviePlot.TabIndex = 18;
+            this.txtMoviePlot.TabIndex = 10;
             // 
             // txtMovieRating
             // 
             this.txtMovieRating.Location = new System.Drawing.Point(12, 474);
             this.txtMovieRating.Name = "txtMovieRating";
             this.txtMovieRating.Size = new System.Drawing.Size(112, 20);
-            this.txtMovieRating.TabIndex = 19;
+            this.txtMovieRating.TabIndex = 11;
             // 
             // txtMovieCopies
             // 
             this.txtMovieCopies.Location = new System.Drawing.Point(130, 474);
             this.txtMovieCopies.Name = "txtMovieCopies";
             this.txtMovieCopies.Size = new System.Drawing.Size(100, 20);
-            this.txtMovieCopies.TabIndex = 20;
+            this.txtMovieCopies.TabIndex = 12;
             // 
             // txtMovieGenres
             // 
             this.txtMovieGenres.Location = new System.Drawing.Point(236, 474);
             this.txtMovieGenres.Name = "txtMovieGenres";
             this.txtMovieGenres.Size = new System.Drawing.Size(100, 20);
-            this.txtMovieGenres.TabIndex = 21;
+            this.txtMovieGenres.TabIndex = 13;
             // 
             // txtMovieRentalCost
             // 
             this.txtMovieRentalCost.Location = new System.Drawing.Point(342, 474);
             this.txtMovieRentalCost.Name = "txtMovieRentalCost";
             this.txtMovieRentalCost.Size = new System.Drawing.Size(100, 20);
-            this.txtMovieRentalCost.TabIndex = 22;
+            this.txtMovieRentalCost.TabIndex = 14;
             // 
             // lblCustID
             // 
@@ -388,7 +445,7 @@
             this.lblCustFirstname.Location = new System.Drawing.Point(59, 367);
             this.lblCustFirstname.Name = "lblCustFirstname";
             this.lblCustFirstname.Size = new System.Drawing.Size(52, 13);
-            this.lblCustFirstname.TabIndex = 25;
+            this.lblCustFirstname.TabIndex = 29;
             this.lblCustFirstname.Text = "Firstname";
             // 
             // lblCustAddress
@@ -495,6 +552,7 @@
             this.monthCalendar1.Location = new System.Drawing.Point(758, 193);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 37;
+            this.monthCalendar1.TabStop = false;
             // 
             // btnDeleteCustomer
             // 
@@ -503,6 +561,7 @@
             this.btnDeleteCustomer.Name = "btnDeleteCustomer";
             this.btnDeleteCustomer.Size = new System.Drawing.Size(102, 23);
             this.btnDeleteCustomer.TabIndex = 71;
+            this.btnDeleteCustomer.TabStop = false;
             this.btnDeleteCustomer.Text = "Delete Customer";
             this.btnDeleteCustomer.UseVisualStyleBackColor = true;
             this.btnDeleteCustomer.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -514,6 +573,7 @@
             this.btnUpdateCustomer.Name = "btnUpdateCustomer";
             this.btnUpdateCustomer.Size = new System.Drawing.Size(109, 23);
             this.btnUpdateCustomer.TabIndex = 70;
+            this.btnUpdateCustomer.TabStop = false;
             this.btnUpdateCustomer.Text = "Update Customer";
             this.btnUpdateCustomer.UseVisualStyleBackColor = true;
             this.btnUpdateCustomer.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -525,6 +585,7 @@
             this.btnAddCustomer.Name = "btnAddCustomer";
             this.btnAddCustomer.Size = new System.Drawing.Size(88, 23);
             this.btnAddCustomer.TabIndex = 69;
+            this.btnAddCustomer.TabStop = false;
             this.btnAddCustomer.Text = "Add Customer";
             this.btnAddCustomer.UseVisualStyleBackColor = true;
             this.btnAddCustomer.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -536,6 +597,7 @@
             this.btnDeleteMovie.Name = "btnDeleteMovie";
             this.btnDeleteMovie.Size = new System.Drawing.Size(102, 23);
             this.btnDeleteMovie.TabIndex = 74;
+            this.btnDeleteMovie.TabStop = false;
             this.btnDeleteMovie.Text = "Delete Movie";
             this.btnDeleteMovie.UseVisualStyleBackColor = true;
             this.btnDeleteMovie.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -547,6 +609,7 @@
             this.btnUpdateMovie.Name = "btnUpdateMovie";
             this.btnUpdateMovie.Size = new System.Drawing.Size(109, 23);
             this.btnUpdateMovie.TabIndex = 73;
+            this.btnUpdateMovie.TabStop = false;
             this.btnUpdateMovie.Text = "Update Movie";
             this.btnUpdateMovie.UseVisualStyleBackColor = true;
             this.btnUpdateMovie.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -558,6 +621,7 @@
             this.btnAddMovie.Name = "btnAddMovie";
             this.btnAddMovie.Size = new System.Drawing.Size(88, 23);
             this.btnAddMovie.TabIndex = 72;
+            this.btnAddMovie.TabStop = false;
             this.btnAddMovie.Text = "Add Movie";
             this.btnAddMovie.UseVisualStyleBackColor = true;
             this.btnAddMovie.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -569,6 +633,7 @@
             this.btnDeleteRental.Name = "btnDeleteRental";
             this.btnDeleteRental.Size = new System.Drawing.Size(102, 23);
             this.btnDeleteRental.TabIndex = 85;
+            this.btnDeleteRental.TabStop = false;
             this.btnDeleteRental.Text = "Delete Rental";
             this.btnDeleteRental.UseVisualStyleBackColor = true;
             this.btnDeleteRental.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -580,6 +645,7 @@
             this.btnUpdateRental.Name = "btnUpdateRental";
             this.btnUpdateRental.Size = new System.Drawing.Size(109, 23);
             this.btnUpdateRental.TabIndex = 84;
+            this.btnUpdateRental.TabStop = false;
             this.btnUpdateRental.Text = "Update Rental";
             this.btnUpdateRental.UseVisualStyleBackColor = true;
             this.btnUpdateRental.Click += new System.EventHandler(this.btnAdminButton_Click);
@@ -598,7 +664,7 @@
             this.txtRentalDateReturned.Location = new System.Drawing.Point(168, 520);
             this.txtRentalDateReturned.Name = "txtRentalDateReturned";
             this.txtRentalDateReturned.Size = new System.Drawing.Size(100, 20);
-            this.txtRentalDateReturned.TabIndex = 96;
+            this.txtRentalDateReturned.TabIndex = 17;
             // 
             // lblRentalDateRented
             // 
@@ -623,14 +689,14 @@
             this.txtRentalDateRented.Location = new System.Drawing.Point(62, 520);
             this.txtRentalDateRented.Name = "txtRentalDateRented";
             this.txtRentalDateRented.Size = new System.Drawing.Size(100, 20);
-            this.txtRentalDateRented.TabIndex = 90;
+            this.txtRentalDateRented.TabIndex = 16;
             // 
             // txtRentalID
             // 
             this.txtRentalID.Location = new System.Drawing.Point(12, 520);
             this.txtRentalID.Name = "txtRentalID";
             this.txtRentalID.Size = new System.Drawing.Size(44, 20);
-            this.txtRentalID.TabIndex = 86;
+            this.txtRentalID.TabIndex = 15;
             // 
             // lblCustLastname
             // 
@@ -646,60 +712,7 @@
             this.txtCustLastname.Location = new System.Drawing.Point(186, 383);
             this.txtCustLastname.Name = "txtCustLastname";
             this.txtCustLastname.Size = new System.Drawing.Size(118, 20);
-            this.txtCustLastname.TabIndex = 98;
-            // 
-            // tabPageReports
-            // 
-            this.tabPageReports.Controls.Add(this.gbxReportSelect);
-            this.tabPageReports.Controls.Add(this.dgvReports);
-            this.tabPageReports.Location = new System.Drawing.Point(4, 22);
-            this.tabPageReports.Name = "tabPageReports";
-            this.tabPageReports.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageReports.Size = new System.Drawing.Size(730, 321);
-            this.tabPageReports.TabIndex = 3;
-            this.tabPageReports.Text = "Reports";
-            this.tabPageReports.UseVisualStyleBackColor = true;
-            // 
-            // dgvReports
-            // 
-            this.dgvReports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReports.Location = new System.Drawing.Point(0, 0);
-            this.dgvReports.Name = "dgvReports";
-            this.dgvReports.Size = new System.Drawing.Size(470, 321);
-            this.dgvReports.TabIndex = 0;
-            // 
-            // rbtMostPopMovie
-            // 
-            this.rbtMostPopMovie.AutoSize = true;
-            this.rbtMostPopMovie.Location = new System.Drawing.Point(16, 19);
-            this.rbtMostPopMovie.Name = "rbtMostPopMovie";
-            this.rbtMostPopMovie.Size = new System.Drawing.Size(124, 17);
-            this.rbtMostPopMovie.TabIndex = 1;
-            this.rbtMostPopMovie.Text = "Most Popular Movies";
-            this.rbtMostPopMovie.UseVisualStyleBackColor = true;
-            this.rbtMostPopMovie.Click += new System.EventHandler(this.ReportSelect_Clicked);
-            // 
-            // gbxReportSelect
-            // 
-            this.gbxReportSelect.Controls.Add(this.rbtRentalsByCust);
-            this.gbxReportSelect.Controls.Add(this.rbtMostPopMovie);
-            this.gbxReportSelect.Location = new System.Drawing.Point(476, 6);
-            this.gbxReportSelect.Name = "gbxReportSelect";
-            this.gbxReportSelect.Size = new System.Drawing.Size(248, 309);
-            this.gbxReportSelect.TabIndex = 2;
-            this.gbxReportSelect.TabStop = false;
-            this.gbxReportSelect.Text = "Reports";
-            // 
-            // rbtRentalsByCust
-            // 
-            this.rbtRentalsByCust.AutoSize = true;
-            this.rbtRentalsByCust.Location = new System.Drawing.Point(16, 43);
-            this.rbtRentalsByCust.Name = "rbtRentalsByCust";
-            this.rbtRentalsByCust.Size = new System.Drawing.Size(122, 17);
-            this.rbtRentalsByCust.TabIndex = 2;
-            this.rbtRentalsByCust.Text = "Rentals by Customer";
-            this.rbtRentalsByCust.UseVisualStyleBackColor = true;
-            this.rbtRentalsByCust.Click += new System.EventHandler(this.ReportSelect_Clicked);
+            this.txtCustLastname.TabIndex = 3;
             // 
             // Form1
             // 
@@ -767,12 +780,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             this.tabPageRentals.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).EndInit();
-            this.gbxRentalSelect.ResumeLayout(false);
-            this.gbxRentalSelect.PerformLayout();
             this.tabPageReports.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).EndInit();
             this.gbxReportSelect.ResumeLayout(false);
             this.gbxReportSelect.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).EndInit();
+            this.gbxRentalSelect.ResumeLayout(false);
+            this.gbxRentalSelect.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
