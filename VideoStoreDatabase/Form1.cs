@@ -192,7 +192,9 @@ namespace VideoStoreDatabase
                         txtMovieTitle.Text = fakeDataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
                         txtRentalDateRented.Text = DateTime.Parse( fakeDataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()).ToShortDateString();//.ToString();
                         //txtRentalDateReturned.Text = fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString();
-                        txtRentalDateReturned.Text = DateTime.Parse(fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()).ToShortDateString();
+                        //checks for empty field in rental return date to avoid downstream exceptions
+                        if(fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()!="")
+                        { txtRentalDateReturned.Text = DateTime.Parse(fakeDataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()).ToShortDateString();}
                     }
                 }
             }
@@ -345,13 +347,13 @@ namespace VideoStoreDatabase
         private void btnAdminButton_Click(object sender, EventArgs e)
         {
             Button fakeButton = sender as Button;
-            string[] data = new[]
-            {
-                txtCustID.Text, txtCustFirstname.Text, txtCustLastname.Text, txtCustAddress.Text, txtCustPhone.Text,
-                txtCustDOB.Text, txtMovieID.Text, txtMovieTitle.Text, txtMovieYear.Text, txtMoviePlot.Text,
-                txtMovieRating.Text, txtMovieCopies.Text, txtMovieGenres.Text, txtMovieRentalCost.Text, txtRentalID.Text,
-                txtRentalDateRented.Text, txtRentalDateReturned.Text
-            };
+            //string[] data = new[]
+            //{
+            //    txtCustID.Text, txtCustFirstname.Text, txtCustLastname.Text, txtCustAddress.Text, txtCustPhone.Text,
+            //    txtCustDOB.Text, txtMovieID.Text, txtMovieTitle.Text, txtMovieYear.Text, txtMoviePlot.Text,
+            //    txtMovieRating.Text, txtMovieCopies.Text, txtMovieGenres.Text, txtMovieRentalCost.Text, txtRentalID.Text,
+            //    txtRentalDateRented.Text, txtRentalDateReturned.Text
+            //};
 
 
             Dictionary<string, string> dictData = new Dictionary<string, string>();
