@@ -190,9 +190,10 @@ namespace VideoStoreDatabase
             //    return myDataTable;
             //}*/
         }
-
+        //method called to return a rental. Passes RentalID and date to stored procedure
         public void ReturnRental(int rentalID, DateTime date)
         {
+
             SqlCommand myCommand = connection.CreateCommand();
             myCommand.Connection = connection;
             myCommand.CommandText = "ReturnRental";
@@ -226,7 +227,7 @@ namespace VideoStoreDatabase
          //}*/
         }
 
-        //rental issue, take movieID, CustID, date(see above) create new rental.
+        //rental issue, take movieID, CustID, date. Send to stored procedure to create new rental.
         public void CreateNewRental(int movieID, int customerID, DateTime date)
         {
             try
@@ -265,14 +266,18 @@ namespace VideoStoreDatabase
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //method called by Form1.btnAdminButton_Click. 
         public void AdminTools(Dictionary<string, string> data, string action)
         {
 
             try
             {
+                //set up sqlcommand
                 SqlCommand myCommand = connection.CreateCommand();
                 myCommand.Connection = connection;
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                //select stored command and parameters to send via sql based on action called by Form1.btnAdminButton_Click
                 switch (action)
                 {
                     case "Add Movie":
@@ -346,14 +351,9 @@ namespace VideoStoreDatabase
                         break;
                 }
 
+                
 
-
-
-
-
-
-                myCommand.CommandType = CommandType.StoredProcedure;
-
+                //execute the command
                 connection.Open();
                 myCommand.ExecuteNonQuery();
                 connection.Close();
@@ -375,30 +375,25 @@ namespace VideoStoreDatabase
 
 
         }
-
+        //method called by Form1.ReportSelect
         public DataTable ReportSelect(string select)
         {
+            //set up return datatable and sqlcommand
             DataTable myDataTable = new DataTable();
-
             SqlCommand myCommand = connection.CreateCommand();
             myCommand.Connection = connection;
-
+            myCommand.CommandType = CommandType.StoredProcedure;
+            myCommand.CommandText = "ShowAllFrom";
+            //decide which property to send
             if (select == "MostPopMov")
             {
-               myCommand.Parameters.AddWithValue("@ViewName", "RentalByPopularity");
+                myCommand.Parameters.AddWithValue("@ViewName", "RentalByPopularity");
             }
             else if (select == "CustMostRent")
-
-
             {
-               myCommand.Parameters.AddWithValue("@ViewName", "CustomersByNumOfRentals");
+                myCommand.Parameters.AddWithValue("@ViewName", "CustomersByNumOfRentals");
             }
-
-
-
-             myCommand.CommandText = "ShowAllFrom";
-            myCommand.CommandType = CommandType.StoredProcedure;
-         
+            //execute the command
             using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
                 connection.Open();
@@ -409,10 +404,8 @@ namespace VideoStoreDatabase
 
 
         }
-    
-
-    //add custDOB for age check on rental? discuss with Gary
-
+        
+        //method called by unit test to check connection
         public bool UnitTestConnection()
         {
             DataTable myDataTable = new DataTable();
