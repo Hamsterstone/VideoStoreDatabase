@@ -15,10 +15,10 @@ namespace VideoStoreDatabase
         public PasswordForm()
         {
             InitializeComponent();
-
+            //put the cursor in the password textbox
             txtPassword.Focus();
         }
-
+        //define the password
         private string password = "password";
 
         // Validate the password.
@@ -37,7 +37,7 @@ namespace VideoStoreDatabase
                 txtPassword.Focus();
             }
         }
-        //allows enter/return/esc to be used rather than clicking the button
+        //allows enter/return/esc to be used rather than having to click the buttons
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

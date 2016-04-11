@@ -135,8 +135,8 @@ namespace VideoStoreDatabase
         //method returns data when deciding whether to view all or current rentals
         public DataTable RentalDataSelect(string select)
         {
+            //set up
             DataTable myDataTable = new DataTable();
-
             SqlCommand myCommand = connection.CreateCommand();
             myCommand.Connection = connection;
 

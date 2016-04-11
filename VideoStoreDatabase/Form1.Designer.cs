@@ -50,12 +50,10 @@
             this.btnIssueMovie = new System.Windows.Forms.Button();
             this.btnReturnMovie = new System.Windows.Forms.Button();
             this.btnAdminOnOff = new System.Windows.Forms.Button();
-            this.txtCustID = new System.Windows.Forms.TextBox();
             this.txtCustFirstname = new System.Windows.Forms.TextBox();
             this.txtCustAddress = new System.Windows.Forms.TextBox();
             this.txtCustPhone = new System.Windows.Forms.TextBox();
             this.txtCustDOB = new System.Windows.Forms.TextBox();
-            this.txtMovieID = new System.Windows.Forms.TextBox();
             this.txtMovieTitle = new System.Windows.Forms.TextBox();
             this.txtMovieYear = new System.Windows.Forms.TextBox();
             this.txtMoviePlot = new System.Windows.Forms.TextBox();
@@ -90,9 +88,11 @@
             this.lblRentalDateRented = new System.Windows.Forms.Label();
             this.lblRentalID = new System.Windows.Forms.Label();
             this.txtRentalDateRented = new System.Windows.Forms.TextBox();
-            this.txtRentalID = new System.Windows.Forms.TextBox();
             this.lblCustLastname = new System.Windows.Forms.Label();
             this.txtCustLastname = new System.Windows.Forms.TextBox();
+            this.lblCustIDActual = new System.Windows.Forms.Label();
+            this.lblMovieIDActual = new System.Windows.Forms.Label();
+            this.lblRentalIDActual = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
@@ -298,6 +298,7 @@
             this.rbtRentalCurrent.Name = "rbtRentalCurrent";
             this.rbtRentalCurrent.Size = new System.Drawing.Size(98, 17);
             this.rbtRentalCurrent.TabIndex = 0;
+            this.rbtRentalCurrent.TabStop = true;
             this.rbtRentalCurrent.Text = "Current Rentals";
             this.rbtRentalCurrent.UseVisualStyleBackColor = true;
             this.rbtRentalCurrent.CheckedChanged += new System.EventHandler(this.RentalSelect_Clicked);
@@ -339,13 +340,6 @@
             this.btnAdminOnOff.UseVisualStyleBackColor = true;
             this.btnAdminOnOff.Click += new System.EventHandler(this.btnAdminOnOff_Click);
             // 
-            // txtCustID
-            // 
-            this.txtCustID.Location = new System.Drawing.Point(12, 383);
-            this.txtCustID.Name = "txtCustID";
-            this.txtCustID.Size = new System.Drawing.Size(44, 20);
-            this.txtCustID.TabIndex = 1;
-            // 
             // txtCustFirstname
             // 
             this.txtCustFirstname.Location = new System.Drawing.Point(62, 383);
@@ -373,13 +367,6 @@
             this.txtCustDOB.Name = "txtCustDOB";
             this.txtCustDOB.Size = new System.Drawing.Size(100, 20);
             this.txtCustDOB.TabIndex = 6;
-            // 
-            // txtMovieID
-            // 
-            this.txtMovieID.Location = new System.Drawing.Point(12, 432);
-            this.txtMovieID.Name = "txtMovieID";
-            this.txtMovieID.Size = new System.Drawing.Size(44, 20);
-            this.txtMovieID.TabIndex = 7;
             // 
             // txtMovieTitle
             // 
@@ -691,13 +678,6 @@
             this.txtRentalDateRented.Size = new System.Drawing.Size(100, 20);
             this.txtRentalDateRented.TabIndex = 16;
             // 
-            // txtRentalID
-            // 
-            this.txtRentalID.Location = new System.Drawing.Point(12, 520);
-            this.txtRentalID.Name = "txtRentalID";
-            this.txtRentalID.Size = new System.Drawing.Size(44, 20);
-            this.txtRentalID.TabIndex = 15;
-            // 
             // lblCustLastname
             // 
             this.lblCustLastname.AutoSize = true;
@@ -714,11 +694,35 @@
             this.txtCustLastname.Size = new System.Drawing.Size(118, 20);
             this.txtCustLastname.TabIndex = 3;
             // 
+            // lblCustIDActual
+            // 
+            this.lblCustIDActual.Location = new System.Drawing.Point(9, 383);
+            this.lblCustIDActual.Name = "lblCustIDActual";
+            this.lblCustIDActual.Size = new System.Drawing.Size(35, 20);
+            this.lblCustIDActual.TabIndex = 100;
+            // 
+            // lblMovieIDActual
+            // 
+            this.lblMovieIDActual.Location = new System.Drawing.Point(9, 432);
+            this.lblMovieIDActual.Name = "lblMovieIDActual";
+            this.lblMovieIDActual.Size = new System.Drawing.Size(35, 20);
+            this.lblMovieIDActual.TabIndex = 101;
+            // 
+            // lblRentalIDActual
+            // 
+            this.lblRentalIDActual.Location = new System.Drawing.Point(9, 520);
+            this.lblRentalIDActual.Name = "lblRentalIDActual";
+            this.lblRentalIDActual.Size = new System.Drawing.Size(35, 20);
+            this.lblRentalIDActual.TabIndex = 102;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 559);
+            this.Controls.Add(this.lblRentalIDActual);
+            this.Controls.Add(this.lblMovieIDActual);
+            this.Controls.Add(this.lblCustIDActual);
             this.Controls.Add(this.lblCustLastname);
             this.Controls.Add(this.txtCustLastname);
             this.Controls.Add(this.lblRentalDateReturned);
@@ -726,7 +730,6 @@
             this.Controls.Add(this.lblRentalDateRented);
             this.Controls.Add(this.lblRentalID);
             this.Controls.Add(this.txtRentalDateRented);
-            this.Controls.Add(this.txtRentalID);
             this.Controls.Add(this.btnDeleteRental);
             this.Controls.Add(this.btnUpdateRental);
             this.Controls.Add(this.btnDeleteMovie);
@@ -756,12 +759,10 @@
             this.Controls.Add(this.txtMoviePlot);
             this.Controls.Add(this.txtMovieYear);
             this.Controls.Add(this.txtMovieTitle);
-            this.Controls.Add(this.txtMovieID);
             this.Controls.Add(this.txtCustDOB);
             this.Controls.Add(this.txtCustPhone);
             this.Controls.Add(this.txtCustAddress);
             this.Controls.Add(this.txtCustFirstname);
-            this.Controls.Add(this.txtCustID);
             this.Controls.Add(this.btnAdminOnOff);
             this.Controls.Add(this.btnReturnMovie);
             this.Controls.Add(this.btnIssueMovie);
@@ -810,12 +811,10 @@
         private System.Windows.Forms.Button btnIssueMovie;
         private System.Windows.Forms.Button btnReturnMovie;
         private System.Windows.Forms.Button btnAdminOnOff;
-        private System.Windows.Forms.TextBox txtCustID;
         private System.Windows.Forms.TextBox txtCustFirstname;
         private System.Windows.Forms.TextBox txtCustAddress;
         private System.Windows.Forms.TextBox txtCustPhone;
         private System.Windows.Forms.TextBox txtCustDOB;
-        private System.Windows.Forms.TextBox txtMovieID;
         private System.Windows.Forms.TextBox txtMovieTitle;
         private System.Windows.Forms.TextBox txtMovieYear;
         private System.Windows.Forms.TextBox txtMoviePlot;
@@ -850,7 +849,6 @@
         private System.Windows.Forms.Label lblRentalDateRented;
         private System.Windows.Forms.Label lblRentalID;
         private System.Windows.Forms.TextBox txtRentalDateRented;
-        private System.Windows.Forms.TextBox txtRentalID;
         private System.Windows.Forms.Label lblCustLastname;
         private System.Windows.Forms.TextBox txtCustLastname;
         private System.Windows.Forms.TabPage tabPageReports;
@@ -858,6 +856,9 @@
         private System.Windows.Forms.RadioButton rbtRentalsByCust;
         private System.Windows.Forms.RadioButton rbtMostPopMovie;
         private System.Windows.Forms.DataGridView dgvReports;
+        private System.Windows.Forms.Label lblCustIDActual;
+        private System.Windows.Forms.Label lblMovieIDActual;
+        private System.Windows.Forms.Label lblRentalIDActual;
     }
 }
 
