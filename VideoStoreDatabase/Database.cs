@@ -53,7 +53,7 @@ namespace VideoStoreDatabase
 
 
 
-            //Obsolete code
+            /*//Obsolete code
             //string sqlQuery = @"SELECT * FROM " + table;
             //DataTable myDataTable = new DataTable();
             //using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
@@ -64,7 +64,7 @@ namespace VideoStoreDatabase
             //   // connection.Close();
             //    //connection.Dispose();
             //    return myDataTable;
-            //}
+            //}*/
         }
         //method called to search for a specific item
         public DataTable SearchForItem(string table, string item)
@@ -85,9 +85,9 @@ namespace VideoStoreDatabase
                 myCommand.CommandText = "FindFromCustomer";
 
             }
-
+            
             myCommand.CommandType = CommandType.StoredProcedure;
-            //define the parameters sent
+            //define the parameters to send
             myCommand.Parameters.AddWithValue("@Find", item);
             //execute the sql query
             using (myDataAdapter = new SqlDataAdapter(myCommand))
@@ -101,7 +101,7 @@ namespace VideoStoreDatabase
 
 
 
-            //OBSOLETE CODE
+            /*//OBSOLETE CODE
             //string sqlQuery = null;
             //DataTable myDataTable = new DataTable();
 
@@ -130,7 +130,7 @@ namespace VideoStoreDatabase
             //    default:
             //        MessageBox.Show("Oops! Database.SearchForItem");
             //        return null;
-            //}
+            //}*/
         }
         //method returns data when deciding whether to view all or current rentals
         public DataTable RentalDataSelect(string select)
@@ -139,25 +139,25 @@ namespace VideoStoreDatabase
             DataTable myDataTable = new DataTable();
             SqlCommand myCommand = connection.CreateCommand();
             myCommand.Connection = connection;
-
+            //decide which parameters to send
             if (select == "NOTAll")
             {
-                myCommand.CommandText = "ShowAllFrom";
+               // myCommand.CommandText = "ShowAllFrom";
                 myCommand.Parameters.AddWithValue("@ViewName", "CurrentRentals");
             }
             else if (select == "All")
 
 
             {
-                myCommand.CommandText = "ShowAllFrom";
+                //myCommand.CommandText = "ShowAllFrom";
                 myCommand.Parameters.AddWithValue("@ViewName", "AllRentals");
             }
 
 
 
-            // myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandText = "ShowAllFrom";//replace with Commandtext in each if selector if a different stored procedure gets called.
             myCommand.CommandType = CommandType.StoredProcedure;
-            // myCommand.Parameters.AddWithValue("@Find", item);
+            //execute the sql query
             using (myDataAdapter = new SqlDataAdapter(myCommand))
             {
                 connection.Open();
@@ -167,7 +167,7 @@ namespace VideoStoreDatabase
             return myDataTable;
 
 
-            //OBSOLETE CODE
+           /* //OBSOLETE CODE
             //DataTable myDataTable = new DataTable();
 
 
@@ -188,10 +188,9 @@ namespace VideoStoreDatabase
             //    connection.Close();
             //   // connection.Dispose();
             //    return myDataTable;
-            //}
+            //}*/
         }
 
-        //rental return if returndate==null then returndate = date. make date field for debug, note date to be system date.
         public void ReturnRental(int rentalID, DateTime date)
         {
             SqlCommand myCommand = connection.CreateCommand();
@@ -204,7 +203,7 @@ namespace VideoStoreDatabase
             myCommand.ExecuteNonQuery();
             connection.Close();
 
-            //OBSOLETE CODE
+            /*//OBSOLETE CODE
             // SqlCommand myCommand=new SqlCommand("UPDATE RentedMovies set DateReturned=@Date where RMID=@rentalID");
             // //using (
             // myCommand.Connection = connection;
@@ -224,7 +223,9 @@ namespace VideoStoreDatabase
 
             // }
 
-        } //}
+         //}*/
+        }
+
         //rental issue, take movieID, CustID, date(see above) create new rental.
         public void CreateNewRental(int movieID, int customerID, DateTime date)
         {
@@ -243,7 +244,7 @@ namespace VideoStoreDatabase
 
 
 
-                //OBSOLETE CODE
+               /* //OBSOLETE CODE
                 //SqlCommand myCommand =
                 //    new SqlCommand(
                 //        @"INSERT INTO RentedMovies(MovieIDFK,CustIDFK,DateRented) VALUES(@movieID,@customerID,@date)");
@@ -255,7 +256,7 @@ namespace VideoStoreDatabase
                 //    connection.Open();
                 //    myCommand.ExecuteNonQuery();
                 //    connection.Close();
-
+                */
 
             }
             catch (Exception ex)
