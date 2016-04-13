@@ -424,6 +424,7 @@ namespace VideoStoreDatabase
         //method to populate the reports tab datagridview
         public void ReportSelect(string name)
         {
+            dgvReports.DataSource = null;
 
             switch (name)
             {

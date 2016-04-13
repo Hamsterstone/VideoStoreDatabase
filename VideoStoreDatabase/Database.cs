@@ -383,15 +383,19 @@ namespace VideoStoreDatabase
             SqlCommand myCommand = connection.CreateCommand();
             myCommand.Connection = connection;
             myCommand.CommandType = CommandType.StoredProcedure;
-            myCommand.CommandText = "ShowAllFrom";
+            myCommand.CommandText = "ShowAllFromOrdered";
             //decide which property to send
             if (select == "MostPopMov")
             {
                 myCommand.Parameters.AddWithValue("@ViewName", "RentalByPopularity");
+                myCommand.Parameters.AddWithValue("@OrderName", "Count");
+
             }
             else if (select == "CustMostRent")
             {
                 myCommand.Parameters.AddWithValue("@ViewName", "CustomersByNumOfRentals");
+                myCommand.Parameters.AddWithValue("@OrderName", "Count");
+
             }
             //execute the command
             using (myDataAdapter = new SqlDataAdapter(myCommand))
@@ -412,11 +416,12 @@ namespace VideoStoreDatabase
             try
             {
                 string sqlQuery = "SELECT * FROM Movies";
-                myDataAdapter = new SqlDataAdapter(sqlQuery, connection);
-                connection.Open();
-                myDataAdapter.Fill(myDataTable);
-                connection.Close();
-
+                using (myDataAdapter = new SqlDataAdapter(sqlQuery, connection))
+                {
+                    connection.Open();
+                    myDataAdapter.Fill(myDataTable);
+                    connection.Close();
+                }
                 return true;
             }
             catch
