@@ -368,12 +368,6 @@ namespace VideoStoreDatabase
 
 
 
-
-
-
-
-
-
         }
         //method called by Form1.ReportSelect
         public DataTable ReportSelect(string select)

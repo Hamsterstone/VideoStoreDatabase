@@ -311,7 +311,7 @@ namespace VideoStoreDatabase
                 
                 using (Form passwordForm = new PasswordForm())
                 {//if the password returns OK --RE-ENABLE FOR FULL PROGRAM
-                   // if (passwordForm.ShowDialog() == DialogResult.OK)
+                    if (passwordForm.ShowDialog() == DialogResult.OK)
                     {
                         //enable the admin buttons
                         btnAddCustomer.Enabled = true;
@@ -327,8 +327,8 @@ namespace VideoStoreDatabase
                 //if the buttons are turned on
             }else if (btnDeleteCustomer.Enabled == true)
             {//check whether to disable admin buttons--RE-ENABLE FOR FULL PROGRAM
-               // DialogResult dialogResult = MessageBox.Show("", "Turn off Admin controls?", MessageBoxButtons.YesNo);
-               // if (dialogResult == DialogResult.Yes)
+                DialogResult dialogResult = MessageBox.Show("", "Turn off Admin controls?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
                     //disable the buttons
                     btnAddCustomer.Enabled = false;
